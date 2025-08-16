@@ -1,0 +1,43 @@
+spring:
+  jackson:
+    time-zone: 'Asia/Seoul'
+  servlet:
+    multipart:
+      max-request-size: 5MB
+      max-file-size: 5MB
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${MYSQL_URL}
+    username: ${MYSQL_NAME}
+    password: ${MYSQL_SECRET}
+
+  # JPA 설정
+  jpa:
+    # 데이터베이스 플랫폼을 지정
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    # JPA Open EntityManager in View 패턴을 활성화 또는 비활성화
+    open-in-view: false
+    # JPA 처리시 발생하는 SQL을 보여줄지 결정
+    show-sql: true
+    hibernate:
+      # 운영시에는 validate or none으로 설정해야 수정되지 않음
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        # 실제 JPA의 구현체인 Hibernate 가 동작하면서 발생하는 SQL을 포맷팅해서 출력합니다.
+        # 실행되는 SQL의 가독성을 높여 줍니다.
+        format_sql: true
+        # LAZY 로딩 시 기본적으로 사용되는 배치 크기를 설정
+        # fetch join 사용시 최적화
+        default_batch_fetch_size: 100
+        use_sql_comments: true
+
+  data:
+    web:
+      pageable:
+        default-page-size: 10
+        # Client가 size=9999 처럼 지나치게 큰 수를 보낼 경우 이를 제한하기 위한 최대값
+        max-page-size: 20
+        one-indexed-parameters: true
+
